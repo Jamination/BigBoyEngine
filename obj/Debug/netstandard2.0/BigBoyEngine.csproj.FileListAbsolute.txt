@@ -1,0 +1,10 @@
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\bin\Debug\netstandard2.0\BigBoyEngine.deps.json
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\bin\Debug\netstandard2.0\BigBoyEngine.dll
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\bin\Debug\netstandard2.0\BigBoyEngine.pdb
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.csproj.AssemblyReference.cache
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.AssemblyInfoInputs.cache
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.AssemblyInfo.cs
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.csproj.CoreCompileInputs.cache
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.dll
+C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\netstandard2.0\BigBoyEngine.pdb
