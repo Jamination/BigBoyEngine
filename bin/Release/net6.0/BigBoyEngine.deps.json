@@ -6,23 +6,23 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "BigBoyEngine/1.0.1": {
+      "BigBoyEngine/1.0.2": {
         "dependencies": {
-          "Dcrew": "1.0.2",
+          "Dcrew": "1.0.4",
           "MonoGame.Framework.DesktopGL": "3.8.0.1641"
         },
         "runtime": {
           "BigBoyEngine.dll": {}
         }
       },
-      "Dcrew/1.0.2": {
+      "Dcrew/1.0.4": {
         "dependencies": {
           "MonoGame.Framework.DesktopGL": "3.8.0.1641"
         },
         "runtime": {
           "lib/net6.0/Dcrew.dll": {
-            "assemblyVersion": "1.0.2.0",
-            "fileVersion": "1.0.2.0"
+            "assemblyVersion": "1.0.4.0",
+            "fileVersion": "1.0.4.0"
           }
         }
       },
@@ -79,17 +79,17 @@
     }
   },
   "libraries": {
-    "BigBoyEngine/1.0.1": {
+    "BigBoyEngine/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Dcrew/1.0.2": {
+    "Dcrew/1.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ljQdFdg2GJ6BmnHpuoqdRZdbJZQ3YBjhR6UUMpMas6RLMCLFdTLwGpwXNheoLFkgYsLwTkS9nHsS+iwU4ar3LQ==",
-      "path": "dcrew/1.0.2",
-      "hashPath": "dcrew.1.0.2.nupkg.sha512"
+      "sha512": "sha512-drXx8axrAqDXy2Llxt/mG+mjMtCGvv4icn1p2WqkQUKQ38W7U0YSAn6hJSPduzl8mr7GqTOmR9SWP9CzZbs/YQ==",
+      "path": "dcrew/1.0.4",
+      "hashPath": "dcrew.1.0.4.nupkg.sha512"
     },
     "MonoGame.Framework.DesktopGL/3.8.0.1641": {
       "type": "package",
