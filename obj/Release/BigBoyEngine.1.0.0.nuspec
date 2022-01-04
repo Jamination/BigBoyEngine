@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>BigBoyEngine</id>
+    <version>1.0.0</version>
+    <authors>BigBoyEngine</authors>
+    <icon>BigBoyEngineIcon.png</icon>
+    <readme>README.md</readme>
+    <description>A 2D game framework for MonoGame, inspired by Godot.</description>
+    <copyright>James Heasman</copyright>
+    <tags>MonoGame Game Framework 2D Engine Godot</tags>
+    <repository url="https://github.com/Jamination/BigBoyEngine" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="Dcrew" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Release\net6.0\BigBoyEngine.dll" target="lib\net6.0\BigBoyEngine.dll" />
+    <file src="C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\README.md" target="\README.md" />
+    <file src="C:\Users\james\OneDrive\Pictures\BigBoyEngineIcon.png" target="\BigBoyEngineIcon.png" />
+  </files>
+</package>

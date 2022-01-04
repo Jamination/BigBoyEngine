@@ -1,7 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <Description>A 2D game framework for MonoGame, inspired by Godot.</Description>
+    <Copyright>James Heasman</Copyright>
+    <PackageIcon>BigBoyEngineIcon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Jamination/BigBoyEngine</RepositoryUrl>
+    <PackageTags>MonoGame;Game;Framework;2D;Engine;Godot;</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Pictures\BigBoyEngineIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641">
       <PrivateAssets>All</PrivateAssets>
@@ -9,5 +22,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dcrew\src\Dcrew.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>
