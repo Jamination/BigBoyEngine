@@ -10,7 +10,7 @@ public class Node {
     public string Name = "";
 
     private NodeId? _parent;
-    private SparseSet _children = new(8);
+    private SparseSet _children = new(8, 8);
 
     public NodeId Id { get; private set; }
 

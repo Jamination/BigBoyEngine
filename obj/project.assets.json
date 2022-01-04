@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "Dcrew/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "MonoGame.Framework.DesktopGL": "3.8.0.1641"
+        },
+        "compile": {
+          "lib/net6.0/Dcrew.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Dcrew.dll": {}
+        }
+      },
       "MonoGame.Framework.DesktopGL/3.8.0.1641": {
         "type": "package",
         "compile": {
@@ -47,23 +59,22 @@
             "rid": "win-x86"
           }
         }
-      },
-      "Dcrew/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "MonoGame.Framework.DesktopGL": "3.8.0.1641"
-        },
-        "compile": {
-          "bin/placeholder/Dcrew.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Dcrew.dll": {}
-        }
       }
     }
   },
   "libraries": {
+    "Dcrew/1.0.1": {
+      "sha512": "hRW4iHFFmr1uXWrIkeQuTdCzf83GkQVKxe9vdrHKXBfzOwg4sY3NXg84SB+ZjelmVjOk5BmYBgieMqt9TwcvjA==",
+      "type": "package",
+      "path": "dcrew/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dcrew.1.0.1.nupkg.sha512",
+        "dcrew.nuspec",
+        "lib/net6.0/Dcrew.dll"
+      ]
+    },
     "MonoGame.Framework.DesktopGL/3.8.0.1641": {
       "sha512": "rJQlrlHQbnOECYV6EcQ8GlGRQ2lzPTroXQcyyOZ0ki+BQRSJEN2zVBm9skqLiXya348aGAfTSSGTaSKjAy9NaA==",
       "type": "package",
@@ -88,16 +99,11 @@
         "runtimes/win-x86/native/SDL2.dll",
         "runtimes/win-x86/native/soft_oal.dll"
       ]
-    },
-    "Dcrew/1.0.0": {
-      "type": "project",
-      "path": "../Dcrew/src/Dcrew.csproj",
-      "msbuildProject": "../Dcrew/src/Dcrew.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Dcrew >= 1.0.0",
+      "Dcrew >= 1.0.1",
       "MonoGame.Framework.DesktopGL >= 3.8.0.1641"
     ]
   },
@@ -127,11 +133,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\james\\OneDrive\\Desktop\\Projects\\Dcrew\\src\\Dcrew.csproj": {
-              "projectPath": "C:\\Users\\james\\OneDrive\\Desktop\\Projects\\Dcrew\\src\\Dcrew.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -144,6 +146,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "Dcrew": {
+            "target": "Package",
+            "version": "[1.0.1, )"
+          },
           "MonoGame.Framework.DesktopGL": {
             "suppressParent": "All",
             "target": "Package",
