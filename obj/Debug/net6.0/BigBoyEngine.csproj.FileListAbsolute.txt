@@ -22,6 +22,3 @@ C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEng
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\ref\BigBoyEngine.dll
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.pdb
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.csproj.AssemblyReference.cache
-C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\Dcrew.dll
-C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\Dcrew.pdb
-C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.csproj.CopyComplete

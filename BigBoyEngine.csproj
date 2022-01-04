@@ -8,6 +8,8 @@
     <RepositoryUrl>https://github.com/Jamination/BigBoyEngine</RepositoryUrl>
     <PackageTags>MonoGame;Game;Framework;2D;Engine;Godot;</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\..\Pictures\BigBoyEngineIcon.png">
@@ -16,7 +18,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dcrew" Version="1.0.1" />
+    <PackageReference Include="Dcrew" Version="1.0.4" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>

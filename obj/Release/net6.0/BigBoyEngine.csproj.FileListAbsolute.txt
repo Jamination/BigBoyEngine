@@ -21,3 +21,4 @@ C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Release\net6.0\BigBoyE
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Release\net6.0\BigBoyEngine.dll
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Release\net6.0\ref\BigBoyEngine.dll
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Release\net6.0\BigBoyEngine.pdb
+C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Release\net6.0\BigBoyEngine.csproj.AssemblyReference.cache

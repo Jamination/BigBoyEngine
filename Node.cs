@@ -113,6 +113,7 @@ public class Node {
         }
         if (Core.HasReadiedScene && !node.HasReadied)
             node.Ready();
+        _children.EnsureFits(node.Id.Index);
         _children.Add(node.Id.Index);
         Nodes<T>.Add(node.Id);
         return node;

@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\james\\OneDrive\\Desktop\\Projects\\BigBoyEngine\\BigBoyEngine.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "restore": {
         "projectUniqueName": "C:\\Users\\james\\OneDrive\\Desktop\\Projects\\BigBoyEngine\\BigBoyEngine.csproj",
         "projectName": "BigBoyEngine",
@@ -42,7 +42,7 @@
           "dependencies": {
             "Dcrew": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.4, )"
             },
             "MonoGame.Framework.DesktopGL": {
               "suppressParent": "All",

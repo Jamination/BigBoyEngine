@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Dcrew/1.0.1": {
+      "Dcrew/1.0.4": {
         "type": "package",
         "dependencies": {
           "MonoGame.Framework.DesktopGL": "3.8.0.1641"
@@ -63,14 +63,14 @@
     }
   },
   "libraries": {
-    "Dcrew/1.0.1": {
-      "sha512": "hRW4iHFFmr1uXWrIkeQuTdCzf83GkQVKxe9vdrHKXBfzOwg4sY3NXg84SB+ZjelmVjOk5BmYBgieMqt9TwcvjA==",
+    "Dcrew/1.0.4": {
+      "sha512": "drXx8axrAqDXy2Llxt/mG+mjMtCGvv4icn1p2WqkQUKQ38W7U0YSAn6hJSPduzl8mr7GqTOmR9SWP9CzZbs/YQ==",
       "type": "package",
-      "path": "dcrew/1.0.1",
+      "path": "dcrew/1.0.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "dcrew.1.0.1.nupkg.sha512",
+        "dcrew.1.0.4.nupkg.sha512",
         "dcrew.nuspec",
         "lib/net6.0/Dcrew.dll"
       ]
@@ -103,7 +103,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Dcrew >= 1.0.1",
+      "Dcrew >= 1.0.4",
       "MonoGame.Framework.DesktopGL >= 3.8.0.1641"
     ]
   },
@@ -111,7 +111,7 @@
     "C:\\Users\\james\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "restore": {
       "projectUniqueName": "C:\\Users\\james\\OneDrive\\Desktop\\Projects\\BigBoyEngine\\BigBoyEngine.csproj",
       "projectName": "BigBoyEngine",
@@ -148,7 +148,7 @@
         "dependencies": {
           "Dcrew": {
             "target": "Package",
-            "version": "[1.0.1, )"
+            "version": "[1.0.4, )"
           },
           "MonoGame.Framework.DesktopGL": {
             "suppressParent": "All",
