@@ -29,10 +29,10 @@ public class Control : Node {
             }
 
             return new RectangleF(
-                Parent.Position.X + Bounds.X * Core.GraphicsDeviceManager.PreferredBackBufferWidth,
-                Parent.Position.Y + Bounds.Y * Core.GraphicsDeviceManager.PreferredBackBufferHeight,
-                Parent.Scale.X * Bounds.Width * Core.GraphicsDeviceManager.PreferredBackBufferWidth,
-                Parent.Scale.Y * Bounds.Height * Core.GraphicsDeviceManager.PreferredBackBufferHeight
+                Parent.Position.X + Bounds.X * Core.GDM.PreferredBackBufferWidth,
+                Parent.Position.Y + Bounds.Y * Core.GDM.PreferredBackBufferHeight,
+                Parent.Scale.X * Bounds.Width * Core.GDM.PreferredBackBufferWidth,
+                Parent.Scale.Y * Bounds.Height * Core.GDM.PreferredBackBufferHeight
             );
         }
         return Bounds;

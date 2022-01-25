@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Dcrew/1.0.4": {
+      "Dcrew/1.0.6": {
         "type": "package",
         "dependencies": {
           "MonoGame.Framework.DesktopGL": "3.8.0.1641"
@@ -63,14 +63,14 @@
     }
   },
   "libraries": {
-    "Dcrew/1.0.4": {
-      "sha512": "drXx8axrAqDXy2Llxt/mG+mjMtCGvv4icn1p2WqkQUKQ38W7U0YSAn6hJSPduzl8mr7GqTOmR9SWP9CzZbs/YQ==",
+    "Dcrew/1.0.6": {
+      "sha512": "2KMd7C9glEJteuUkKiNNl6wYVIee/tmJawbY6sO4q1kQ4mWcLd3wje4N8qzXCQnT+wPBSrWpV7Cr/UzzHXAyDQ==",
       "type": "package",
-      "path": "dcrew/1.0.4",
+      "path": "dcrew/1.0.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "dcrew.1.0.4.nupkg.sha512",
+        "dcrew.1.0.6.nupkg.sha512",
         "dcrew.nuspec",
         "lib/net6.0/Dcrew.dll"
       ]
@@ -103,7 +103,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Dcrew >= 1.0.4",
+      "Dcrew >= 1.0.6",
       "MonoGame.Framework.DesktopGL >= 3.8.0.1641"
     ]
   },
@@ -148,7 +148,7 @@
         "dependencies": {
           "Dcrew": {
             "target": "Package",
-            "version": "[1.0.4, )"
+            "version": "[1.0.6, )"
           },
           "MonoGame.Framework.DesktopGL": {
             "suppressParent": "All",

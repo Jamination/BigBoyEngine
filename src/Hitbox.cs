@@ -6,7 +6,7 @@ public class Hitbox : Node {
     public Vector2 Offset, Size;
     public bool Collidable = true;
 
-    public Hitbox(float offsetX, float offsetY, float width, float height) : base(0, 0) {
+    public Hitbox(float offsetX, float offsetY, float width, float height) {
         Offset = new Vector2(offsetX, offsetY);
         Size = new Vector2(width, height);
         Active = true;

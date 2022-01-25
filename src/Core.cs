@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.Input;
 namespace BigBoyEngine;
 
 public class Core : Game {
-    public static GraphicsDeviceManager GraphicsDeviceManager;
-    public static GraphicsDevice Graphics => GraphicsDeviceManager.GraphicsDevice;
+    public static GraphicsDeviceManager GDM;
+    public static GraphicsDevice Graphics => GDM.GraphicsDevice;
     public static SpriteBatch SpriteBatch;
     public new static ContentManager Content;
 
@@ -25,47 +25,80 @@ public class Core : Game {
 
     public static Vector2 GlobalMousePosition;
 
-    public static Node Scene;
-    private static Node _nextScene;
-    public static FreeList<Node> Nodes = new(1024), Singletons = new(16);
-    internal static readonly Dictionary<int, int> LatestGeneration = new();
-    
-    public static void ChangeScene(Node scene) {
-        _nextScene ??= scene;
+    private static Node _scene, _nextScene;
+
+    public static Node Scene {
+        get => _scene;
+        set {
+            value.Active = false;
+            _scene = value;
+        }
     }
 
-    public static void ReloadScene() {
-        Scene.Destroy();
-        HasReadiedScene = false;
-        Scene.AddToTree();
-        Scene.Setup();
-        Scene.Ready();
-        HasReadiedScene = true;
+    public static FreeList<Node> Nodes = new(1024), Singletons = new(16);
+    public static Dictionary<Type, List<Node>> NodesOfType = new();
+    internal static readonly Dictionary<int, int> LatestGeneration = new();
+
+    private static float AccumulatedTime;
+    public static float StepSpeed = 1f / 60f;
+
+    public static RenderTarget2D ScreenTarget;
+    private static Rectangle ScreenRect;
+
+    public static int PreferredWindowWidth, PreferredWindowHeight, ViewportWidth, ViewportHeight;
+
+    public static void ChangeScene(Node scene) {
+        _nextScene ??= scene;
+        _nextScene.Active = false;
     }
 
     public Core() {
-        GraphicsDeviceManager = new GraphicsDeviceManager(this);
+        GDM = new GraphicsDeviceManager(this);
         IsMouseVisible = true;
         Content = base.Content;
         Content.RootDirectory = "Content";
     }
 
     protected override void Initialize() {
-        GraphicsDeviceManager.PreferredBackBufferWidth = 1280;
-        GraphicsDeviceManager.PreferredBackBufferHeight = 720;
-        GraphicsDeviceManager.IsFullScreen = false;
-        GraphicsDeviceManager.ApplyChanges();
+        GDM.PreferredBackBufferWidth = 1280;
+        GDM.PreferredBackBufferHeight = 720;
+        GDM.IsFullScreen = false;
+        GDM.ApplyChanges();
         SpriteBatchExtensions.Init();
         base.Initialize();
     }
 
-    public virtual void Config(string title, int width, int height, bool startsFullscreen) {
-        GraphicsDeviceManager.IsFullScreen = startsFullscreen;
-        GraphicsDeviceManager.PreferredBackBufferWidth = width;
-        GraphicsDeviceManager.PreferredBackBufferHeight = height;
+    public virtual void Config(string title, int width, int height, int viewportWidth = 640,
+        int viewportHeight = 360, bool startsFullscreen = false) {
+        GDM.IsFullScreen = startsFullscreen;
+        GDM.PreferredBackBufferWidth = width;
+        GDM.PreferredBackBufferHeight = height;
+        PreferredWindowWidth = width;
+        PreferredWindowHeight = height;
         Window.Title = title;
+        GDM.ApplyChanges();
+        ViewportWidth = viewportWidth;
+        ViewportHeight = viewportHeight;
         WindowTitle = title;
-        GraphicsDeviceManager.ApplyChanges();
+        ScreenTarget = new RenderTarget2D(GraphicsDevice, ViewportWidth, ViewportHeight);
+        Window.ClientSizeChanged += WindowOnClientSizeChanged;
+        WindowOnClientSizeChanged(this, null);
+    }
+
+    private void WindowOnClientSizeChanged(object sender, EventArgs e) {
+        float outputAspect = Window.ClientBounds.Width / (float)Window.ClientBounds.Height;
+        float preferredAspect = PreferredWindowWidth / (float)PreferredWindowHeight;
+        if (outputAspect <= preferredAspect) {
+            // output is taller than it is wider, bars on top/bottom
+            int presentHeight = (int)(Window.ClientBounds.Width / preferredAspect + 0.5f);
+            int barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
+            ScreenRect = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
+        } else {
+            // output is wider than it is tall, bars left/right
+            int presentWidth = (int)(Window.ClientBounds.Height * preferredAspect + 0.5f);
+            int barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
+            ScreenRect = new Rectangle(barWidth, 0, presentWidth, Window.ClientBounds.Height);
+        }
     }
 
     public T AddSingleton<T>(T singleton) where T : Node {
@@ -100,7 +133,7 @@ public class Core : Game {
 
 #if DEBUG
         if (Input.KeyPressed(Keys.Enter))
-            ReloadScene();
+            Scene.ResetChildren();
         if (Input.KeyPressed(Keys.Tab))
             DebugEnabled = !DebugEnabled;
 #endif
@@ -118,13 +151,19 @@ public class Core : Game {
                 Scene.Setup();
                 Scene.Ready();
                 HasReadiedScene = true;
-            } else Scene.Update();
+            }
+            else {
+                AccumulatedTime += Time.Delta;
+                while (AccumulatedTime >= StepSpeed) {
+                    Scene.Update();
+                    AccumulatedTime -= StepSpeed;
+                }
+            }
+            Node.World.Update();
+            if (OptimiseTree)
+                Node.World.Optimize();
+            Camera.Instance.Update();
         }
-
-        Node.World.Update();
-        if (OptimiseTree)
-            Node.World.Optimize();
-        Camera.Instance.Update();
 #if DEBUG
         Window.Title = WindowTitle + " - " + (int)MathF.Round(1f / Time.Delta) + " fps";
 #endif
@@ -132,6 +171,7 @@ public class Core : Game {
     }
 
     protected override void Draw(GameTime gameTime) {
+        GraphicsDevice.SetRenderTarget(ScreenTarget);
         Graphics.Clear(ClearOptions.Target, ClearColor, 0, 0);
         SpriteBatch.Begin(SpriteSortMode, BlendState,
             SamplerState, transformMatrix: Camera.Instance != null ? Camera.Instance.View : Matrix.Identity);
@@ -139,11 +179,18 @@ public class Core : Game {
             Scene.Draw();
             if (DebugEnabled) {
                 Scene.DebugDraw();
-                Node.World.Draw(SpriteBatch, RectStyle.Inline, 4);
+                if (Camera.Instance != null)
+                    Node.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline,
+                        4 / (PreferredWindowWidth / (float)ViewportWidth));
             }
         }
         foreach (var singleton in Singletons.All)
             Singletons[singleton].Draw();
+        SpriteBatch.End();
+        GraphicsDevice.SetRenderTarget(null);
+
+        SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp);
+        SpriteBatch.Draw(ScreenTarget, ScreenRect, Color.White);
         SpriteBatch.End();
         base.Draw(gameTime);
     }

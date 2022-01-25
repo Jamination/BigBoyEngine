@@ -15,11 +15,9 @@ public static class Nodes<T> where T : Node {
     }
 
     public static bool TryRemove(NodeId id) {
-        if (_store.Has(id.Index) && _store[id.Index].Generation == id.Generation) {
-            _store.Remove(id.Index);
-            return true;
-        }
-        return false;
+        if (!_store.Has(id.Index) || _store[id.Index].Generation != id.Generation) return false;
+        _store.Remove(id.Index);
+        return true;
     }
 
     public static T Get(int index) {

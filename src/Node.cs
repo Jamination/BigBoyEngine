@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Dcrew;
 using Dcrew.Spatial;
 using Microsoft.Xna.Framework;
@@ -144,6 +145,17 @@ public class Node {
         throw new Exception($"Could not get node {name} in {Name}.");
     }
 
+    public T GetAt<T>(float x, float y, string name = "") where T : Node {
+        if (name == "")
+            name = typeof(T).Name;
+        foreach (var id in World.Query(new Vector2(x, y)).All) {
+            var node = Core.Nodes[id];
+            if (node.Name == name && node is T t)
+                return t;
+        }
+        return null;
+    }
+
     public T Find<T>(string name = "") where T : Node {
         if (name == "")
             name = typeof(T).Name;
@@ -161,6 +173,10 @@ public class Node {
 
     internal void AddToTree(NodeId? parent = null) {
         int i = Core.Nodes.Add(this);
+        var type = GetType();
+        if (!Core.NodesOfType.ContainsKey(type))
+            Core.NodesOfType.Add(type, new List<Node>());
+        Core.NodesOfType[type].Add(this);
         if (!Core.LatestGeneration.ContainsKey(i))
             Core.LatestGeneration.Add(i, 0);
         Id = new NodeId(i, Core.LatestGeneration[i]);
@@ -170,6 +186,7 @@ public class Node {
             Name = GetType().Name;
         if (Parent != null)
             Persistent = Parent.Persistent;
+        UpdateBounds();
     }
 
     public virtual void Setup() { }
@@ -181,7 +198,7 @@ public class Node {
 
         foreach (var id in _children.All) {
             var child = Core.Nodes[id];
-            if ((child.Persistent && !child.HasReadied) || !child.HasReadied)
+            if (child.Persistent && !child.HasReadied || !child.HasReadied)
                 Core.Nodes[id].Ready();
         }
         HasReadied = true;
@@ -212,12 +229,20 @@ public class Node {
         _parent?.Get()._children.Remove(Id.Index);
         Core.LatestGeneration[Id.Index]++;
         Core.Nodes.Remove(Id.Index);
+        Core.NodesOfType[GetType()].Remove(this);
         _destroyed = true;
+    }
+
+    public void ResetChildren() {
+        ClearChildren();
+        Setup();
+        Ready();
     }
 
     public void ClearChildren() {
         foreach (var child in Children)
             child.Destroy();
+        _children.Clear();
     }
 
     public void Rotate(float amount) {
@@ -232,7 +257,12 @@ public class Node {
         Scale *= new Vector2(ax, ay);
     }
 
-    public virtual Rectangle GetGlobalAABB() => new((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
+    public virtual Rectangle GetGlobalAABB() {
+        var aabb = new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
+        foreach (var child in Children)
+            aabb = Rectangle.Union(aabb, child.GetGlobalAABB());
+        return aabb;
+    }
 
     public virtual void UpdateBounds() {
         if (World.MaxItems < Id.Index)
@@ -272,9 +302,8 @@ public class Node {
         }
         if (Active)
             UpdateBounds();
-        foreach (var child in Children) {
-                child.UpdateTransform();
-        }
+        foreach (var child in Children)
+            child.UpdateTransform();
         _positionIsDirty = false;
         _scaleIsDirty = false;
         _rotationIsDirty = false;

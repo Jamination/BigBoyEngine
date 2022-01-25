@@ -42,7 +42,7 @@
           "dependencies": {
             "Dcrew": {
               "target": "Package",
-              "version": "[1.0.4, )"
+              "version": "[1.0.6, )"
             },
             "MonoGame.Framework.DesktopGL": {
               "suppressParent": "All",

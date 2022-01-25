@@ -15,7 +15,7 @@ public class Actor : Hitbox {
 
     public static HashSet<Actor> Instances = new();
 
-    public virtual bool IsRiding(Solid solid) {
+    public virtual bool IsAttached(Solid solid) {
         var aabb = GetGlobalAABB();
         return new Rectangle(aabb.X, aabb.Y + 1, aabb.Width, aabb.Height).Intersects(solid.GetGlobalAABB());
     }
@@ -48,7 +48,7 @@ public class Actor : Hitbox {
             return null;
         }
 
-        var query = World.Query(AABB);
+        var query = World.Query(AABB).All;
         return query.IsEmpty ? null : (Hitbox)Core.Nodes[query[0]];
     }
 
@@ -67,7 +67,7 @@ public class Actor : Hitbox {
 
         var hitboxes = new HashSet<Hitbox>();
 
-        foreach (var id in World.Query(broadphase)) {
+        foreach (var id in World.Query(broadphase).All) {
             if (Core.Nodes[id] is Hitbox s && s != this)
                 hitboxes.Add(s);
         }
@@ -107,12 +107,12 @@ public class Actor : Hitbox {
 
     public void MoveYExact(int amount, Collision onCollide = null) {
         if (amount == 0) return;
-        if (!CollidesWithHitboxes) Position += new Vector2(0, amount); 
+        if (!CollidesWithHitboxes) Position += new Vector2(0, amount);
         var broadphase = GetBroadphase(0, amount);
 
         var hitboxes = new HashSet<Hitbox>();
 
-        foreach (var id in World.Query(broadphase)) {
+        foreach (var id in World.Query(broadphase).All) {
             if (Core.Nodes[id] is Hitbox s && s != this)
                 hitboxes.Add(s);
         }

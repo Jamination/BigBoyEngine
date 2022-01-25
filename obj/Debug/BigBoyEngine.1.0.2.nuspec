@@ -12,7 +12,7 @@
     <repository url="https://github.com/Jamination/BigBoyEngine" />
     <dependencies>
       <group targetFramework="net6.0">
-        <dependency id="Dcrew" version="1.0.4" exclude="Build,Analyzers" />
+        <dependency id="Dcrew" version="1.0.6" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>

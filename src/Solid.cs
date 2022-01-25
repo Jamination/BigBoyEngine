@@ -11,10 +11,10 @@ public class Solid : Hitbox {
 
     public Solid(float offsetX, float offsetY, float width, float height) : base(offsetX, offsetY, width, height) { }
 
-    public HashSet<Actor> GetAllRidingActors() {
+    public HashSet<Actor> GetAllAttachedActors() {
         var riding = new HashSet<Actor>();
         foreach (var actor in Actor.Instances) {
-            if (actor.IsRiding(this))
+            if (actor.IsAttached(this))
                 riding.Add(actor);
         }
         return riding;
@@ -40,7 +40,7 @@ public class Solid : Hitbox {
 
     public void MoveExact(int amountX, int amountY) {
         if (amountX == 0 && amountY == 0) return;
-        var riding = GetAllRidingActors();
+        var attached = GetAllAttachedActors();
         Collidable = false;
 
         if (amountX != 0) {
@@ -51,7 +51,7 @@ public class Solid : Hitbox {
                 if (actor.GetGlobalAABB().Intersects(aabb))
                     actor.MoveX(amountX > 0 ? aabb.Right - actorAABB.Left
                         : aabb.Left - actorAABB.Right, actor.Squish);
-                else if (riding.Contains(actor))
+                else if (attached.Contains(actor))
                     actor.MoveX(amountX);
             }
         }
@@ -64,7 +64,7 @@ public class Solid : Hitbox {
                 if (actor.GetGlobalAABB().Intersects(aabb))
                     actor.MoveY(amountY > 0 ? aabb.Bottom - actorAABB.Top
                         : aabb.Top - actorAABB.Bottom, actor.Squish);
-                else if (riding.Contains(actor))
+                else if (attached.Contains(actor))
                     actor.MoveY(amountY);
             }
         }
