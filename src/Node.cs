@@ -17,6 +17,8 @@ public class Node {
 
     public Node Parent => _parent?.Get();
 
+
+    public static Vector2 MousePosition, GlobalMousePosition;
     public static Quadtree World = new(-100000, -100000, 200000, 200000, 4096);
 
     public Node[] Children {
@@ -31,7 +33,7 @@ public class Node {
         }
     }
 
-    public ContentManager Content => Core.Content;
+    public static ContentManager Content => Core.Content;
 
     private bool _destroyed;
 
@@ -95,6 +97,12 @@ public class Node {
             UpdateDepth();
         }
     }
+
+    public Vector2 PointToLocal(Vector2 p) => Vector2.Transform(p, GlobalTransform);
+    public Vector2 PointToGlobal(Vector2 p) => Vector2.Transform(p, Matrix.Invert(GlobalTransform));
+
+    public Vector2 WorldToScreen(Vector2 p) => Vector2.Transform(p, Camera.Instance.View);
+    public Vector2 ScreenToWorld(Vector2 p) => Vector2.Transform(p, Matrix.Invert(Camera.Instance.View));
 
     public void SetParent(Node parent) => _parent = parent.Id;
 
@@ -272,8 +280,8 @@ public class Node {
     }
 
     public void LookAt(Vector2 target, float speed = 1) {
-        var pos = GlobalPosition;
-        Rotation = MathsExtensions.LerpAngle(Rotation, MathF.Atan2(target.Y - pos.Y, target.X - pos.X), speed) % MathF.PI;
+        Rotation = MathsExtensions.LerpAngle(Rotation, 
+            MathF.Atan2(target.Y - GlobalPosition.Y, target.X - GlobalPosition.X), speed) % MathF.PI;
     }
 
     public Matrix Transform {

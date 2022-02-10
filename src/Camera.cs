@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace BigBoyEngine;
 
@@ -22,10 +21,6 @@ public class Camera {
         var bWidth = (int)(Core.ViewportWidth * Zoom);
         var bHeight = (int)(Core.ViewportHeight * Zoom);
         Bounds = new Rectangle((int)MathF.Round(Position.X - bWidth * .5f),
-            (int)MathF.Round(Position.Y- bHeight * .5f), bWidth, bHeight);
-        var mp = Mouse.GetState().Position.ToVector2();
-        Core.GlobalMousePosition = Vector2.Transform(
-            new Vector2(mp.X / (Core.PreferredWindowWidth / (float)Core.ViewportWidth),
-                mp.Y / (Core.PreferredWindowHeight / (float)Core.ViewportHeight)), Matrix.Invert(View));
+            (int)MathF.Round(Position.Y - bHeight * .5f), bWidth, bHeight);
     }
 }

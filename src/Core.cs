@@ -23,8 +23,6 @@ public class Core : Game {
     public static SamplerState SamplerState = SamplerState.PointClamp;
     public static BlendState BlendState = BlendState.AlphaBlend;
 
-    public static Vector2 GlobalMousePosition;
-
     private static Node _scene, _nextScene;
 
     public static Node Scene {
@@ -137,6 +135,12 @@ public class Core : Game {
         if (Input.KeyPressed(Keys.Tab))
             DebugEnabled = !DebugEnabled;
 #endif
+
+        Node.MousePosition = Input.NewMouse.Position.ToVector2();
+        Node.GlobalMousePosition = Vector2.Transform(
+            new Vector2(Node.MousePosition.X / (PreferredWindowWidth / (float)ViewportWidth),
+                Node.MousePosition.Y / (PreferredWindowHeight / (float)ViewportHeight)),
+            Matrix.Invert(Camera.Instance.View));
 
         foreach (var singleton in Singletons.All)
             Singletons[singleton].Update();

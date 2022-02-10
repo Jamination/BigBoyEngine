@@ -11,7 +11,8 @@ public class Sprite : Node {
     public SpriteEffects Flip = SpriteEffects.None;
     public bool Centered = true;
 
-    public Sprite(Texture2D texture, float x = 0, float y = 0, float scale = 1, float rotation = 0) : base(x, y, scale, rotation) {
+    public Sprite(Texture2D texture, Rectangle? source = null, float x = 0,
+        float y = 0, float scale = 1, float rotation = 0) : base(x, y, scale, rotation) {
         Texture = texture;
     }
 

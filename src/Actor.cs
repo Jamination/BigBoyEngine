@@ -34,6 +34,10 @@ public class Actor : Hitbox {
         base.Destroy();
     }
 
+    public virtual bool AllowCollision(Hitbox hitbox) {
+        return true;
+    }
+
     public Hitbox CollideAt(Vector2 position, IEnumerable<Hitbox> hitboxes = null) {
         var oldPos = Position;
         Position = position;
@@ -41,7 +45,7 @@ public class Actor : Hitbox {
         Position = oldPos;
         if (hitboxes != null) {
             foreach (var hitbox in hitboxes) {
-                if (hitbox != this && hitbox.Collidable && AABB.Intersects(hitbox.GetGlobalAABB())) {
+                if (hitbox != this && hitbox.Collidable && AllowCollision(hitbox) && AABB.Intersects(hitbox.GetGlobalAABB())) {
                     return hitbox;
                 }
             }
