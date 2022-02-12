@@ -66,8 +66,8 @@ public class Core : Game {
         base.Initialize();
     }
 
-    public virtual void Config(string title, int width, int height, int viewportWidth = 640,
-        int viewportHeight = 360, bool startsFullscreen = false) {
+    public virtual void Config(string title, int width, int height, bool startsFullscreen = false, int? viewportWidth = null,
+        int? viewportHeight = null) {
         GDM.IsFullScreen = startsFullscreen;
         GDM.PreferredBackBufferWidth = width;
         GDM.PreferredBackBufferHeight = height;
@@ -75,8 +75,8 @@ public class Core : Game {
         PreferredWindowHeight = height;
         Window.Title = title;
         GDM.ApplyChanges();
-        ViewportWidth = viewportWidth;
-        ViewportHeight = viewportHeight;
+        ViewportWidth = viewportWidth ?? width;
+        ViewportHeight = viewportHeight ?? height;
         WindowTitle = title;
         ScreenTarget = new RenderTarget2D(GraphicsDevice, ViewportWidth, ViewportHeight);
         Window.ClientSizeChanged += WindowOnClientSizeChanged;
