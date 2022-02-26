@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace BigBoyEngine;
 
@@ -12,9 +13,9 @@ public class Hitbox : Node {
         Active = true;
     }
 
-    public override Rectangle GetGlobalAABB() {
-        var width = Size.X * GlobalScale.X;
-        var height = Size.Y * GlobalScale.Y;
+    public override Rectangle GetAABB() {
+        var width = MathF.Round(Size.X * GlobalScale.X);
+        var height = MathF.Round(Size.Y * GlobalScale.Y);
         return new Rectangle((int)(Offset.X + GlobalPosition.X - width * .5f),
             (int)(Offset.Y + GlobalPosition.Y - height * .5f), (int)width, (int)height);
     }

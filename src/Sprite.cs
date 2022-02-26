@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,6 +14,7 @@ public class Sprite : Node {
 
     public Sprite(Texture2D texture, Rectangle? source = null, float x = 0,
         float y = 0, float scale = 1, float rotation = 0) : base(x, y, scale, rotation) {
+        Source = source;
         Texture = texture;
     }
 
@@ -35,10 +37,10 @@ public class Sprite : Node {
         base.Draw();
     }
 
-    public override Rectangle GetGlobalAABB() {
-        if (Texture == null) return Rectangle.Empty;
-        var width = Texture.Width * GlobalScale.X;
-        var height = Texture.Height * GlobalScale.Y;
+    public override Rectangle GetAABB() {
+        if (Texture == null) return new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
+        var width = MathF.Round((Source?.Width ?? Texture.Width) * GlobalScale.X);
+        var height = MathF.Round((Source?.Height ?? Texture.Height) * GlobalScale.Y);
         return new Rectangle(
             (int)(GlobalPosition.X - width * .5f),
             (int)(GlobalPosition.Y - height * .5f),

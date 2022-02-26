@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -42,13 +43,12 @@ public class AnimatedSprite : Node {
     public Color Color = Color.White;
     public Vector2 Origin;
     public SpriteEffects Flip = SpriteEffects.None;
-    public bool Centered = true, Playing;
+    public bool Centered = true, Playing = true;
 
     public Animation Animation => _anims[_currentAnim];
 
-    public AnimatedSprite(Texture2D texture, bool playing = true, params Animation[] anims) {
+    public AnimatedSprite(Texture2D texture, params Animation[] anims) {
         Texture = texture;
-        Playing = playing;
         foreach (var anim in anims)
             _anims.Add(anim.Name, anim);
         _currentAnim = anims[0].Name;
@@ -101,5 +101,17 @@ public class AnimatedSprite : Node {
             Flip,
             GlobalDepth);
         base.Draw();
+    }
+
+    public override Rectangle GetAABB() {
+        if (Texture == null) return new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
+        var width = MathF.Round(Animation.Frames[_currentFrame].Width * GlobalScale.X);
+        var height = MathF.Round(Animation.Frames[_currentFrame].Height * GlobalScale.Y);
+        return new Rectangle(
+            (int)(GlobalPosition.X - width * .5f),
+            (int)(GlobalPosition.Y - height * .5f),
+            (int)width,
+            (int)height
+        );
     }
 }

@@ -16,8 +16,8 @@ public class Actor : Hitbox {
     public static HashSet<Actor> Instances = new();
 
     public virtual bool IsAttached(Solid solid) {
-        var aabb = GetGlobalAABB();
-        return new Rectangle(aabb.X, aabb.Y + 1, aabb.Width, aabb.Height).Intersects(solid.GetGlobalAABB());
+        var aabb = GetAABB();
+        return new Rectangle(aabb.X, aabb.Y + 1, aabb.Width, aabb.Height).Intersects(solid.GetAABB());
     }
 
     public Actor(float offsetX, float offsetY, float width, float height) : base(offsetX, offsetY, width, height) {
@@ -41,11 +41,11 @@ public class Actor : Hitbox {
     public Hitbox CollideAt(Vector2 position, IEnumerable<Hitbox> hitboxes = null) {
         var oldPos = Position;
         Position = position;
-        var AABB = GetGlobalAABB();
+        var AABB = GetAABB();
         Position = oldPos;
         if (hitboxes != null) {
             foreach (var hitbox in hitboxes) {
-                if (hitbox != this && hitbox.Collidable && AllowCollision(hitbox) && AABB.Intersects(hitbox.GetGlobalAABB())) {
+                if (hitbox != this && hitbox.Collidable && AllowCollision(hitbox) && AABB.Intersects(hitbox.GetAABB())) {
                     return hitbox;
                 }
             }

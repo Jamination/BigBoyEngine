@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework;
 
 namespace BigBoyEngine;
 
-public static class MathsExtensions {
+public static class MathsExt {
     public static float LerpAngle(float source, float destination, float amount) {
-        const float TwoPI = (float)(MathF.PI * 2);
+        const float TwoPI = MathF.PI * 2;
         float c, d;
         if (destination < source) {
             c = destination + TwoPI;

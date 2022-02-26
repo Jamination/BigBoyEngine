@@ -23,6 +23,8 @@ public class Core : Game {
     public static SamplerState SamplerState = SamplerState.PointClamp;
     public static BlendState BlendState = BlendState.AlphaBlend;
 
+    public static RNG RNG = new(Random.Shared.Next());
+
     private static Node _scene, _nextScene;
 
     public static Node Scene {

@@ -16,7 +16,7 @@ public class Node {
     public NodeId Id { get; private set; }
 
     public Node Parent => _parent?.Get();
-
+    public static Node Scene => Core.Scene;
 
     public static Vector2 MousePosition, GlobalMousePosition;
     public static Quadtree World = new(-100000, -100000, 200000, 200000, 4096);
@@ -34,6 +34,7 @@ public class Node {
     }
 
     public static ContentManager Content => Core.Content;
+    public static RNG RNG => Core.RNG;
 
     private bool _destroyed;
 
@@ -158,7 +159,7 @@ public class Node {
             name = typeof(T).Name;
         foreach (var id in World.Query(new Vector2(x, y)).All) {
             var node = Core.Nodes[id];
-            if (node.Name == name && node is T t)
+            if (node != this && node.Name == name && node is T t)
                 return t;
         }
         return null;
@@ -180,7 +181,7 @@ public class Node {
     }
 
     internal void AddToTree(NodeId? parent = null) {
-        int i = Core.Nodes.Add(this);
+        var i = Core.Nodes.Add(this);
         var type = GetType();
         if (!Core.NodesOfType.ContainsKey(type))
             Core.NodesOfType.Add(type, new List<Node>());
@@ -195,6 +196,17 @@ public class Node {
         if (Parent != null)
             Persistent = Parent.Persistent;
         UpdateBounds();
+    }
+
+    public bool Overlaps(Node other) => other.GetAABB().Intersects(GetAABB());
+
+    public HashSet<T> GetAllOverlapping<T>() where T : Node {
+        var nodes = new HashSet<T>();
+        foreach (var node in Core.NodesOfType[typeof(T)]) {
+            if (node.Overlaps(this))
+                nodes.Add((T)node);
+        }
+        return nodes;
     }
 
     public virtual void Setup() { }
@@ -265,22 +277,28 @@ public class Node {
         Scale *= new Vector2(ax, ay);
     }
 
-    public virtual Rectangle GetGlobalAABB() {
-        var aabb = new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
-        foreach (var child in Children)
-            aabb = Rectangle.Union(aabb, child.GetGlobalAABB());
+    public Rectangle GetGlobalAABB() {
+        var aabb = GetAABB();
+        foreach (var child in Children) {
+            var childAABB = child.GetGlobalAABB();
+            aabb = Rectangle.Union(aabb, childAABB);
+        }
         return aabb;
+    }
+
+    public virtual Rectangle GetAABB() {
+        return new Rectangle((int)GlobalPosition.X, (int)GlobalPosition.Y, 0, 0);
     }
 
     public virtual void UpdateBounds() {
         if (World.MaxItems < Id.Index)
             World.MaxItems = Id.Index + 1;
-        var aabb = GetGlobalAABB();
+        var aabb = GetAABB();
         World.Update(Id.Index, aabb.X, aabb.Y, aabb.Width, aabb.Height);
     }
 
     public void LookAt(Vector2 target, float speed = 1) {
-        Rotation = MathsExtensions.LerpAngle(Rotation, 
+        Rotation = MathsExt.LerpAngle(Rotation, 
             MathF.Atan2(target.Y - GlobalPosition.Y, target.X - GlobalPosition.X), speed) % MathF.PI;
     }
 
