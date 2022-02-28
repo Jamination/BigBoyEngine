@@ -15,11 +15,15 @@ public class Node {
 
     public NodeId Id { get; private set; }
 
+    public Material Material = new();
+
     public Node Parent => _parent?.Get();
     public static Node Scene => Core.Scene;
 
     public static Vector2 MousePosition, GlobalMousePosition;
     public static Quadtree World = new(-100000, -100000, 200000, 200000, 4096);
+
+    private bool _resetting;
 
     public Node[] Children {
         get {
@@ -225,6 +229,13 @@ public class Node {
     }
 
     public virtual void Update() {
+        if (_resetting) {
+            _resetting = false;
+            ClearChildren();
+            Setup();
+            Ready();
+            return;
+        }
         if (!Processing) return;
         foreach (var child in _children.All)
             Core.Nodes[child].Update();
@@ -254,9 +265,7 @@ public class Node {
     }
 
     public void ResetChildren() {
-        ClearChildren();
-        Setup();
-        Ready();
+        _resetting = true;
     }
 
     public void ClearChildren() {

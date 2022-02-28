@@ -7,7 +7,6 @@ namespace BigBoyEngine;
 public class Sprite : Node {
     public Texture2D Texture;
     public Rectangle? Source;
-    public Color Colour = Color.White;
     public Vector2 Origin;
     public SpriteEffects Flip = SpriteEffects.None;
     public bool Centered = true;
@@ -28,7 +27,7 @@ public class Sprite : Node {
             Texture,
             GlobalPosition,
             Source,
-            Colour,
+            Material.Tint,
             GlobalRotation,
             origin,
             GlobalScale,

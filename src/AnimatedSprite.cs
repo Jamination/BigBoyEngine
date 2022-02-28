@@ -40,7 +40,6 @@ public class AnimatedSprite : Node {
     public Texture2D Texture;
     private readonly Dictionary<string, Animation> _anims = new();
 
-    public Color Color = Color.White;
     public Vector2 Origin;
     public SpriteEffects Flip = SpriteEffects.None;
     public bool Centered = true, Playing = true;
@@ -94,7 +93,7 @@ public class AnimatedSprite : Node {
             Texture,
             GlobalPosition,
             Animation.Frames[_currentFrame],
-            Color,
+            Material.Tint,
             GlobalRotation,
             origin,
             GlobalScale,
