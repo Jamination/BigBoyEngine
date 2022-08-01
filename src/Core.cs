@@ -25,17 +25,11 @@ public class Core : Game {
 
     public static RNG RNG = new(Random.Shared.Next());
 
-    private static Node _scene, _nextScene;
+    private static Node _nextScene;
 
     public static Vector2 MousePosition, GlobalMousePosition, SmoothRemainder;
 
-    public static Node Scene {
-        get => _scene;
-        set {
-            value.Active = false;
-            _scene = value;
-        }
-    }
+    public static Node Scene { get; set; }
 
     public static FreeList<Node> Nodes = new(1024), Singletons = new(16);
     public static Dictionary<Type, List<Node>> NodesOfType = new();
@@ -51,7 +45,6 @@ public class Core : Game {
 
     public static void ChangeScene(Node scene) {
         _nextScene ??= scene;
-        _nextScene.Active = false;
     }
 
     public Core() {
@@ -169,9 +162,9 @@ public class Core : Game {
                     AccumulatedTime -= StepSpeed;
                 }
             }
-            Node.World.Update();
+            Spatial.World.Update();
             if (OptimiseTree)
-                Node.World.Optimize();
+                Spatial.World.Optimize();
             Camera.Instance.Update();
         }
 #if DEBUG
@@ -191,7 +184,7 @@ public class Core : Game {
             if (DebugEnabled) {
                 Scene.DebugDraw();
                 if (Camera.Instance != null)
-                    Node.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline);
+                    Spatial.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline);
             }
         }
         foreach (var singleton in Singletons.All)

@@ -17,7 +17,7 @@ public class Control : Node {
 
     public RectangleF GetGlobalBounds() {
         var parent = Parent;
-        if (parent != null) {
+        if (parent is Spatial spatial) {
             if (_parentIsControl) {
                 var control = parent as Control;
                 return new RectangleF(
@@ -29,10 +29,10 @@ public class Control : Node {
             }
 
             return new RectangleF(
-                Parent.Position.X + Bounds.X * Core.GDM.PreferredBackBufferWidth,
-                Parent.Position.Y + Bounds.Y * Core.GDM.PreferredBackBufferHeight,
-                Parent.Scale.X * Bounds.Width * Core.GDM.PreferredBackBufferWidth,
-                Parent.Scale.Y * Bounds.Height * Core.GDM.PreferredBackBufferHeight
+                spatial.Position.X + Bounds.X * Core.GDM.PreferredBackBufferWidth,
+                spatial.Position.Y + Bounds.Y * Core.GDM.PreferredBackBufferHeight,
+                spatial.Scale.X * Bounds.Width * Core.GDM.PreferredBackBufferWidth,
+                spatial.Scale.Y * Bounds.Height * Core.GDM.PreferredBackBufferHeight
             );
         }
         return Bounds;

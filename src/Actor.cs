@@ -11,11 +11,11 @@ public class Actor : Hitbox {
 
     public Collision Squish;
 
-    public bool CollidesWithHitboxes = true;
+    public bool Collides = true;
 
     public static HashSet<Actor> Instances = new();
 
-    public event Collision OnCollision;
+    public event Collision Collided;
 
     public virtual bool IsAttached(Solid solid) {
         var aabb = GetAABB();
@@ -68,7 +68,10 @@ public class Actor : Hitbox {
 
     public void MoveXExact(int amount, Collision onCollide = null) {
         if (amount == 0) return;
-        if (!CollidesWithHitboxes) Position += new Vector2(amount, 0); 
+        if (!Collides) {
+            Position += new Vector2(amount, 0);
+            return;
+        }
         var broadphase = GetBroadphase(amount, 0);
 
         var hitboxes = new HashSet<Hitbox>();
@@ -99,7 +102,7 @@ public class Actor : Hitbox {
                 var data = new CollisionData(hitbox, sign,
                     new Vector2(moved, 0), target);
                 onCollide?.Invoke(data);
-                OnCollision?.Invoke(data);
+                Collided?.Invoke(data);
                 break;
             }
         }
@@ -115,7 +118,10 @@ public class Actor : Hitbox {
 
     public void MoveYExact(int amount, Collision onCollide = null) {
         if (amount == 0) return;
-        if (!CollidesWithHitboxes) Position += new Vector2(0, amount);
+        if (!Collides) {
+            Position += new Vector2(0, amount);
+            return;
+        }
         var broadphase = GetBroadphase(0, amount);
 
         var hitboxes = new HashSet<Hitbox>();
@@ -146,7 +152,7 @@ public class Actor : Hitbox {
                 var data = new CollisionData(hitbox, sign,
                     new Vector2(0, moved), target);
                 onCollide?.Invoke(data);
-                OnCollision?.Invoke(data);
+                Collided?.Invoke(data);
                 break;
             }
         }

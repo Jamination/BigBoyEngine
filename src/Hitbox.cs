@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace BigBoyEngine;
 
-public class Hitbox : Node {
+public class Hitbox : Spatial {
     public Vector2 Offset, Size;
     public bool Collidable = true;
 
