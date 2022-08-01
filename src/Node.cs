@@ -318,6 +318,12 @@ public class Node {
             MathF.Atan2(target.Y - GlobalPosition.Y, target.X - GlobalPosition.X), speed) % MathF.PI;
     }
 
+    public void LookAt(Node target, float speed = 1) {
+        Rotation = MathsExt.LerpAngle(Rotation,
+            MathF.Atan2(target.GlobalPosition.Y - GlobalPosition.Y,
+                target.GlobalPosition.X - GlobalPosition.X), speed) % MathF.PI;
+    }
+
     public Matrix Transform {
         get {
             if (_positionIsDirty || _scaleIsDirty || _rotationIsDirty) {
@@ -335,6 +341,7 @@ public class Node {
     public Matrix GlobalTransform { get; private set; }
 
     protected void UpdateTransform() {
+        if (!AddedToTree) return;
         if (Parent != null) {
             GlobalTransform = Transform * Parent.GlobalTransform;
             GlobalDepth = DepthRelativeToCamera + Parent.GlobalDepth;
@@ -353,9 +360,8 @@ public class Node {
 
     protected void UpdateDepth() {
         GlobalDepth = Parent != null ? DepthRelativeToCamera + Parent.GlobalDepth : DepthRelativeToCamera;
-        foreach (var child in Children) {
+        foreach (var child in Children)
             child.UpdateDepth();
-        }
     }
 
     protected void UpdateTint() {
