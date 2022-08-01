@@ -81,7 +81,7 @@ public class Core : Game {
         ViewportWidth = viewportWidth ?? width;
         ViewportHeight = viewportHeight ?? height;
         WindowTitle = title;
-        ScreenTarget = new RenderTarget2D(GraphicsDevice, ViewportWidth, ViewportHeight);
+        ScreenTarget = new RenderTarget2D(GraphicsDevice, ViewportWidth + 2, ViewportHeight + 2);
         Window.ClientSizeChanged += WindowOnClientSizeChanged;
         WindowOnClientSizeChanged(this, null);
     }
@@ -93,12 +93,12 @@ public class Core : Game {
             // output is taller than it is wider, bars on top/bottom
             int presentHeight = (int)(Window.ClientBounds.Width / preferredAspect + 0.5f);
             int barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
-            ScreenRect = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
+            ScreenRect = new Rectangle(-1, barHeight - 1, Window.ClientBounds.Width, presentHeight);
         } else {
             // output is wider than it is tall, bars left/right
             int presentWidth = (int)(Window.ClientBounds.Height * preferredAspect + 0.5f);
             int barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
-            ScreenRect = new Rectangle(barWidth, 0, presentWidth, Window.ClientBounds.Height);
+            ScreenRect = new Rectangle(barWidth - 1, -1, presentWidth, Window.ClientBounds.Height);
         }
     }
 
@@ -196,7 +196,15 @@ public class Core : Game {
         GraphicsDevice.SetRenderTarget(null);
 
         SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp);
-        SpriteBatch.Draw(ScreenTarget, ScreenRect, Color.White);
+        var screenPos = new Vector2(ScreenRect.X, ScreenRect.Y);
+        var screenScale = new Vector2(ScreenRect.Width / (float)ViewportWidth, ScreenRect.Height / (float)ViewportHeight);
+        if (Camera.Instance != null) {
+            var remainder = new Vector2(Camera.Instance.Position.X - (int)Camera.Instance.Position.X,
+                Camera.Instance.Position.Y - (int)Camera.Instance.Position.Y);
+            if (Camera.Instance.Smooth)
+                screenPos -= remainder;
+        }
+        SpriteBatch.Draw(ScreenTarget, screenPos, null, Color.White, 0, Vector2.Zero, screenScale, SpriteEffects.None, 0);
         SpriteBatch.End();
         base.Draw(gameTime);
     }

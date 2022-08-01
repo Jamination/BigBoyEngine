@@ -8,7 +8,7 @@ public class Camera {
     public Rectangle Bounds;
     public Vector2 Position = Vector2.Zero;
     public float Rotation = 0, Zoom = 1;
-    public bool Centered = true;
+    public bool Centered = true, Smooth = true;
 
     public static Camera Instance;
 
