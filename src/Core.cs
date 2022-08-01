@@ -14,7 +14,7 @@ public class Core : Game {
     public static SpriteBatch SpriteBatch;
     public new static ContentManager Content;
 
-    public static bool ExitOnEscape = true, DebugEnabled, HasReadiedScene, OptimiseTree = true;
+    public static bool ExitOnEscape = true, DebugEnabled, HasReadiedScene, SmoothScreen, OptimiseTree = true;
     public static string WindowTitle = "BigBoyEngine";
 
     public static Color ClearColor = new(38, 44, 59);
@@ -27,7 +27,7 @@ public class Core : Game {
 
     private static Node _scene, _nextScene;
 
-    public static Vector2 MousePosition, GlobalMousePosition;
+    public static Vector2 MousePosition, GlobalMousePosition, SmoothRemainder;
 
     public static Node Scene {
         get => _scene;
@@ -70,7 +70,7 @@ public class Core : Game {
     }
 
     public virtual void Config(string title, int width, int height, bool startsFullscreen = false, int? viewportWidth = null,
-        int? viewportHeight = null) {
+        int? viewportHeight = null, bool smoothscreen = false) {
         GDM.IsFullScreen = startsFullscreen;
         GDM.PreferredBackBufferWidth = width;
         GDM.PreferredBackBufferHeight = height;
@@ -81,7 +81,9 @@ public class Core : Game {
         ViewportWidth = viewportWidth ?? width;
         ViewportHeight = viewportHeight ?? height;
         WindowTitle = title;
-        ScreenTarget = new RenderTarget2D(GraphicsDevice, ViewportWidth + 2, ViewportHeight + 2);
+        SmoothScreen = smoothscreen;
+        ScreenTarget = SmoothScreen ? new RenderTarget2D(GraphicsDevice, ViewportWidth + 4, ViewportHeight + 4) : 
+            new RenderTarget2D(GraphicsDevice, ViewportWidth, ViewportHeight);
         Window.ClientSizeChanged += WindowOnClientSizeChanged;
         WindowOnClientSizeChanged(this, null);
     }
@@ -93,12 +95,12 @@ public class Core : Game {
             // output is taller than it is wider, bars on top/bottom
             int presentHeight = (int)(Window.ClientBounds.Width / preferredAspect + 0.5f);
             int barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
-            ScreenRect = new Rectangle(-1, barHeight - 1, Window.ClientBounds.Width, presentHeight);
+            ScreenRect = new Rectangle(SmoothScreen ? -2 : 0, barHeight - (SmoothScreen ? 2 : 0), Window.ClientBounds.Width, presentHeight);
         } else {
             // output is wider than it is tall, bars left/right
             int presentWidth = (int)(Window.ClientBounds.Height * preferredAspect + 0.5f);
             int barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
-            ScreenRect = new Rectangle(barWidth - 1, -1, presentWidth, Window.ClientBounds.Height);
+            ScreenRect = new Rectangle(barWidth - (SmoothScreen ? 2 : 0), SmoothScreen ? -2 : 0, presentWidth, Window.ClientBounds.Height);
         }
     }
 
@@ -138,12 +140,13 @@ public class Core : Game {
         if (Input.KeyPressed(Keys.Tab))
             DebugEnabled = !DebugEnabled;
 #endif
-
-        MousePosition = Input.NewMouse.Position.ToVector2();
+        if (SmoothScreen)
+            MousePosition = Input.NewMouse.Position.ToVector2() + SmoothRemainder + new Vector2(2, 2);
+        else MousePosition = Input.NewMouse.Position.ToVector2();
         GlobalMousePosition = Vector2.Transform(
-            new Vector2(MousePosition.X / (PreferredWindowWidth / (float)ViewportWidth),
-                MousePosition.Y / (PreferredWindowHeight / (float)ViewportHeight)),
-            Matrix.Invert(Camera.Instance.View));
+        new Vector2(MousePosition.X / (PreferredWindowWidth / (float)ViewportWidth),
+            MousePosition.Y / (PreferredWindowHeight / (float)ViewportHeight)),
+        Matrix.Invert(Camera.Instance.View));
 
         foreach (var singleton in Singletons.All)
             Singletons[singleton].Update();
@@ -180,8 +183,9 @@ public class Core : Game {
     protected override void Draw(GameTime gameTime) {
         GraphicsDevice.SetRenderTarget(ScreenTarget);
         Graphics.Clear(ClearOptions.Target, ClearColor, 0, 0);
+        var view = Camera.Instance.View;
         SpriteBatch.Begin(SpriteSortMode, BlendState,
-            SamplerState, transformMatrix: Camera.Instance != null ? Camera.Instance.View : Matrix.Identity);
+            SamplerState, transformMatrix: Camera.Instance != null ? view : Matrix.Identity);
         if (Scene != null) {
             Scene.Draw();
             if (DebugEnabled) {
@@ -198,11 +202,12 @@ public class Core : Game {
         SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp);
         var screenPos = new Vector2(ScreenRect.X, ScreenRect.Y);
         var screenScale = new Vector2(ScreenRect.Width / (float)ViewportWidth, ScreenRect.Height / (float)ViewportHeight);
-        if (Camera.Instance != null) {
-            var remainder = new Vector2(Camera.Instance.Position.X - (int)Camera.Instance.Position.X,
-                Camera.Instance.Position.Y - (int)Camera.Instance.Position.Y);
-            if (Camera.Instance.Smooth)
-                screenPos -= remainder;
+        if (Camera.Instance != null && SmoothScreen) {
+            SmoothRemainder = new Vector2(Camera.Instance.Position.X - MathF.Floor(Camera.Instance.Position.X),
+                Camera.Instance.Position.Y - MathF.Floor(Camera.Instance.Position.Y)) *
+                              (ScreenRect.Width / (float)ViewportWidth * Camera.Instance.Zoom);
+            if (SmoothScreen)
+                screenPos -= SmoothRemainder;
         }
         SpriteBatch.Draw(ScreenTarget, screenPos, null, Color.White, 0, Vector2.Zero, screenScale, SpriteEffects.None, 0);
         SpriteBatch.End();
