@@ -6,31 +6,20 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "BigBoyEngine/1.0.4": {
+      "BigBoyEngine/1.0.5": {
         "dependencies": {
           "Dcrew": "1.0.6",
-          "MonoGame.Framework.DesktopGL": "3.8.0.1641"
+          "MonoGame.Framework.DesktopGL": "3.8.1.303"
         },
         "runtime": {
           "BigBoyEngine.dll": {}
         }
       },
-      "Dcrew/1.0.6": {
-        "dependencies": {
-          "MonoGame.Framework.DesktopGL": "3.8.0.1641"
-        },
+      "MonoGame.Framework.DesktopGL/3.8.1.303": {
         "runtime": {
-          "lib/net6.0/Dcrew.dll": {
-            "assemblyVersion": "1.0.6.0",
-            "fileVersion": "1.0.6.0"
-          }
-        }
-      },
-      "MonoGame.Framework.DesktopGL/3.8.0.1641": {
-        "runtime": {
-          "lib/netstandard2.0/MonoGame.Framework.dll": {
-            "assemblyVersion": "3.8.0.1641",
-            "fileVersion": "3.8.0.1641"
+          "lib/net6.0/MonoGame.Framework.dll": {
+            "assemblyVersion": "3.8.1.303",
+            "fileVersion": "3.8.1.303"
           }
         },
         "runtimeTargets": {
@@ -44,7 +33,7 @@
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
-          "runtimes/osx/native/libSDL2-2.0.0.dylib": {
+          "runtimes/osx/native/libSDL2.dylib": {
             "rid": "osx",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
@@ -57,7 +46,7 @@
           "runtimes/win-x64/native/SDL2.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "2.0.12.0"
+            "fileVersion": "2.0.20.0"
           },
           "runtimes/win-x64/native/soft_oal.dll": {
             "rid": "win-x64",
@@ -67,7 +56,7 @@
           "runtimes/win-x86/native/SDL2.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "2.0.12.0"
+            "fileVersion": "2.0.20.0"
           },
           "runtimes/win-x86/native/soft_oal.dll": {
             "rid": "win-x86",
@@ -75,28 +64,31 @@
             "fileVersion": "0.0.0.0"
           }
         }
+      },
+      "Dcrew/1.0.6": {
+        "runtime": {
+          "Dcrew.dll": {}
+        }
       }
     }
   },
   "libraries": {
-    "BigBoyEngine/1.0.4": {
+    "BigBoyEngine/1.0.5": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Dcrew/1.0.6": {
+    "MonoGame.Framework.DesktopGL/3.8.1.303": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-2KMd7C9glEJteuUkKiNNl6wYVIee/tmJawbY6sO4q1kQ4mWcLd3wje4N8qzXCQnT+wPBSrWpV7Cr/UzzHXAyDQ==",
-      "path": "dcrew/1.0.6",
-      "hashPath": "dcrew.1.0.6.nupkg.sha512"
+      "sha512": "sha512-eGYhqn0n1olk8MNYeE9EuBmoNNECN1T18rPMaQpkzsEQ0H3nVyFPXC+uCo78v5pi5juQpJ3PSFnSkjzZJ1U58A==",
+      "path": "monogame.framework.desktopgl/3.8.1.303",
+      "hashPath": "monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
     },
-    "MonoGame.Framework.DesktopGL/3.8.0.1641": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-rJQlrlHQbnOECYV6EcQ8GlGRQ2lzPTroXQcyyOZ0ki+BQRSJEN2zVBm9skqLiXya348aGAfTSSGTaSKjAy9NaA==",
-      "path": "monogame.framework.desktopgl/3.8.0.1641",
-      "hashPath": "monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+    "Dcrew/1.0.6": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

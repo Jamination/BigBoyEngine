@@ -10,7 +10,12 @@
       "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
       "DisplayName": "Miscellaneous Files",
       "ColorIndex": -1
+    },
+    "d0b1bb74-c449-41b7-89b9-9820c2e7a96a": {
+      "ProjectGuid": "d0b1bb74-c449-41b7-89b9-9820c2e7a96a",
+      "DisplayName": "Dcrew",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

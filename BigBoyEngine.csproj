@@ -8,9 +8,10 @@
     <RepositoryUrl>https://github.com/Jamination/BigBoyEngine</RepositoryUrl>
     <PackageTags>MonoGame;Game;Framework;2D;Engine;Godot;</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.4</AssemblyVersion>
-    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <Version>1.0.5</Version>
     <PackageReleaseNotes>Fleshed out the spatial features and optimised the node tree.</PackageReleaseNotes>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\..\Pictures\BigBoyEngineIcon.png">
@@ -19,10 +20,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dcrew" Version="1.0.6" />
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641">
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.1.303">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dcrew\src\Dcrew.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="README.md">

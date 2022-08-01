@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "arI7hVK9sDR3XZeQomVTLohwb3ZvAMOe/cM7dStmltKqSOUwIGmoddqCNcBL6TAYy92E3DO2iwAWP8pnqa+tww==",
+  "dgSpecHash": "Sm8PMV5Pf5mXrIAfndItgVyoZDs4oFseGjWUWkSoPTjsG6myZ4NcSFhhjwAYBK0Sw7YYsYZZvaiQanhBGb68nA==",
   "success": true,
   "projectFilePath": "C:\\Users\\james\\OneDrive\\Desktop\\Projects\\BigBoyEngine\\BigBoyEngine.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\james\\.nuget\\packages\\dcrew\\1.0.6\\dcrew.1.0.6.nupkg.sha512",
-    "C:\\Users\\james\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+    "C:\\Users\\james\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\james\\.nuget\\packages\\dcrew\\1.0.6\\dcrew.1.0.6.nupkg.sha512"
   ],
   "logs": []
 }

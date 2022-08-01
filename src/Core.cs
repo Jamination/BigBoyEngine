@@ -27,6 +27,8 @@ public class Core : Game {
 
     private static Node _scene, _nextScene;
 
+    public static Vector2 MousePosition, GlobalMousePosition;
+
     public static Node Scene {
         get => _scene;
         set {
@@ -64,7 +66,6 @@ public class Core : Game {
         GDM.PreferredBackBufferHeight = 720;
         GDM.IsFullScreen = false;
         GDM.ApplyChanges();
-        SpriteBatchExtensions.Init();
         base.Initialize();
     }
 
@@ -138,10 +139,10 @@ public class Core : Game {
             DebugEnabled = !DebugEnabled;
 #endif
 
-        Node.MousePosition = Input.NewMouse.Position.ToVector2();
-        Node.GlobalMousePosition = Vector2.Transform(
-            new Vector2(Node.MousePosition.X / (PreferredWindowWidth / (float)ViewportWidth),
-                Node.MousePosition.Y / (PreferredWindowHeight / (float)ViewportHeight)),
+        MousePosition = Input.NewMouse.Position.ToVector2();
+        GlobalMousePosition = Vector2.Transform(
+            new Vector2(MousePosition.X / (PreferredWindowWidth / (float)ViewportWidth),
+                MousePosition.Y / (PreferredWindowHeight / (float)ViewportHeight)),
             Matrix.Invert(Camera.Instance.View));
 
         foreach (var singleton in Singletons.All)
@@ -186,8 +187,7 @@ public class Core : Game {
             if (DebugEnabled) {
                 Scene.DebugDraw();
                 if (Camera.Instance != null)
-                    Node.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline,
-                        4 / (PreferredWindowWidth / (float)ViewportWidth));
+                    Node.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline);
             }
         }
         foreach (var singleton in Singletons.All)

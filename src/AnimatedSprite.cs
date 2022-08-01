@@ -70,7 +70,7 @@ public class AnimatedSprite : Node {
     }
 
     public override void Update() {
-        if (Playing && (_timeLeft -= Time.Delta) <= 0) {
+        if (Animation.Frames.Length > 1 && Playing && (_timeLeft -= Time.Delta) <= 0) {
             _timeLeft += _speed;
             _currentFrame++;
             if (_currentFrame >= Animation.Frames.Length) {
@@ -93,7 +93,7 @@ public class AnimatedSprite : Node {
             Texture,
             GlobalPosition,
             Animation.Frames[_currentFrame],
-            Material.Tint,
+            GlobalTint,
             GlobalRotation,
             origin,
             GlobalScale,

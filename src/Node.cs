@@ -15,12 +15,9 @@ public class Node {
 
     public NodeId Id { get; private set; }
 
-    public Material Material = new();
-
     public Node Parent => _parent?.Get();
     public static Node Scene => Core.Scene;
 
-    public static Vector2 MousePosition, GlobalMousePosition;
     public static Quadtree World = new(-100000, -100000, 200000, 200000, 4096);
 
     private bool _resetting;
@@ -52,6 +49,7 @@ public class Node {
     private Vector2 _position, _scale;
     private float _rotation, _depth = .5f;
     private Matrix _transform;
+    private Color _tint = Color.White;
 
     private bool
         _positionIsDirty,
@@ -102,6 +100,16 @@ public class Node {
             UpdateDepth();
         }
     }
+
+    public Color Tint {
+        get => _tint;
+        set {
+            _tint = value;
+            UpdateTint();
+        }
+    }
+
+    public bool MouseHovering() => GetAABB().Contains(Core.GlobalMousePosition);
 
     public Vector2 PointToLocal(Vector2 p) => Vector2.Transform(p, GlobalTransform);
     public Vector2 PointToGlobal(Vector2 p) => Vector2.Transform(p, Matrix.Invert(GlobalTransform));
@@ -199,7 +207,6 @@ public class Node {
             Name = GetType().Name;
         if (Parent != null)
             Persistent = Parent.Persistent;
-        UpdateBounds();
     }
 
     public bool Overlaps(Node other) => other.GetAABB().Intersects(GetAABB());
@@ -217,8 +224,8 @@ public class Node {
 
     public virtual void Ready() {
         UpdateTransform();
-        UpdateTransform();
         UpdateDepth();
+        UpdateTint();
 
         foreach (var id in _children.All) {
             var child = Core.Nodes[id];
@@ -257,9 +264,9 @@ public class Node {
         if (_destroyed) return;
         foreach (var child in _children.All)
             Core.Nodes[child].Destroy();
-        _parent?.Get()._children.Remove(Id.Index);
+        _parent?.Get()._children.Del(Id.Index);
         Core.LatestGeneration[Id.Index]++;
-        Core.Nodes.Remove(Id.Index);
+        Core.Nodes.Del(Id.Index);
         Core.NodesOfType[GetType()].Remove(this);
         _destroyed = true;
     }
@@ -351,6 +358,16 @@ public class Node {
         }
     }
 
+    protected void UpdateTint() {
+        if (Parent != null) {
+            var vec = Tint.ToVector4() * Parent.GlobalTint.ToVector4();
+            GlobalTint = new Color(vec.X, vec.Y, vec.Z, vec.W);
+        }
+        else GlobalTint = _tint;
+        foreach (var child in Children)
+            child.UpdateTint();
+    }
+
     public Vector2 GlobalPosition {
         get {
             var pos = GlobalTransform.Translation;
@@ -365,6 +382,8 @@ public class Node {
             return new Vector2(scale.X, scale.Y);
         }
     }
+
+    public Color GlobalTint { get; private set; }
 
     public float GlobalRotation => MathF.Atan2(GlobalTransform.M12, GlobalTransform.M11);
     public float GlobalDepth { get; private set; }

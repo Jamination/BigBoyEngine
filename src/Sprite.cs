@@ -27,7 +27,7 @@ public class Sprite : Node {
             Texture,
             GlobalPosition,
             Source,
-            Material.Tint,
+            GlobalTint,
             GlobalRotation,
             origin,
             GlobalScale,
