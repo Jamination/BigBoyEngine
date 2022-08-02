@@ -33,7 +33,7 @@ public struct Animation {
     }
 }
 
-public class AnimatedSprite : Spatial {
+public class AnimatedSprite : Node {
     private string _currentAnim;
     private int _currentFrame;
     private float _timeLeft, _speed = .1f;

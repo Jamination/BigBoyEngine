@@ -162,9 +162,9 @@ public class Core : Game {
                     AccumulatedTime -= StepSpeed;
                 }
             }
-            Spatial.World.Update();
+            Node.World.Update();
             if (OptimiseTree)
-                Spatial.World.Optimize();
+                Node.World.Optimize();
             Camera.Instance.Update();
         }
 #if DEBUG
@@ -184,7 +184,7 @@ public class Core : Game {
             if (DebugEnabled) {
                 Scene.DebugDraw();
                 if (Camera.Instance != null)
-                    Spatial.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline);
+                    Node.World.Draw(SpriteBatch, Camera.Instance.Bounds, RectStyle.Inline);
             }
         }
         foreach (var singleton in Singletons.All)

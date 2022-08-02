@@ -15,7 +15,7 @@ public class Actor : Hitbox {
 
     public static HashSet<Actor> Instances = new();
 
-    public event Collision Collided;
+    public event Collision OnCollision;
 
     public virtual bool IsAttached(Solid solid) {
         var aabb = GetAABB();
@@ -102,7 +102,7 @@ public class Actor : Hitbox {
                 var data = new CollisionData(hitbox, sign,
                     new Vector2(moved, 0), target);
                 onCollide?.Invoke(data);
-                Collided?.Invoke(data);
+                OnCollision?.Invoke(data);
                 break;
             }
         }
@@ -152,7 +152,7 @@ public class Actor : Hitbox {
                 var data = new CollisionData(hitbox, sign,
                     new Vector2(0, moved), target);
                 onCollide?.Invoke(data);
-                Collided?.Invoke(data);
+                OnCollision?.Invoke(data);
                 break;
             }
         }

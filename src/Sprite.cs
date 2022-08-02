@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BigBoyEngine;
 
-public class Sprite : Spatial {
+public class Sprite : Node {
     public Texture2D Texture;
     public Rectangle? Source;
     public Vector2 Origin;
