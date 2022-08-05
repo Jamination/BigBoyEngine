@@ -25,6 +25,8 @@ public class Node {
     public event DelegateNode OnNodeAdded;
     public event DelegateNode OnNodeRemoved;
 
+    public event EventHandler OnTransformChanged;
+
     public Node[] Children {
         get {
             var arr = new Node[_children.Count];
@@ -314,10 +316,10 @@ public class Node {
         Scale *= new Vector2(ax, ay);
     }
 
-    public Rectangle GetGlobalAABB() {
+    public Rectangle GetUnionAABB() {
         var aabb = GetAABB();
         foreach (var child in SpatialChildren) {
-            var childAABB = child.GetGlobalAABB();
+            var childAABB = child.GetUnionAABB();
             aabb = Rectangle.Union(aabb, childAABB);
         }
         return aabb;
@@ -339,11 +341,7 @@ public class Node {
             MathF.Atan2(target.Y - GlobalPosition.Y, target.X - GlobalPosition.X), speed) % MathF.PI;
     }
 
-    public void LookAt(Node target, float speed = 1) {
-        Rotation = MathsExt.LerpAngle(Rotation,
-            MathF.Atan2(target.GlobalPosition.Y - GlobalPosition.Y,
-                target.GlobalPosition.X - GlobalPosition.X), speed) % MathF.PI;
-    }
+    public void LookAt(Node target, float speed = 1) => LookAt(target.GlobalPosition, speed);
 
     public Matrix Transform {
         get {
@@ -377,6 +375,7 @@ public class Node {
         _positionIsDirty = false;
         _scaleIsDirty = false;
         _rotationIsDirty = false;
+        OnTransformChanged?.Invoke(this, EventArgs.Empty);
     }
 
     protected void UpdateDepth() {

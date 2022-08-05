@@ -42,7 +42,7 @@ public class AnimatedSprite : Node {
 
     public Vector2 Origin;
     public SpriteEffects Flip = SpriteEffects.None;
-    public bool Centered = true, Playing = true;
+    public bool Centered = true, Playing;
 
     public Animation Animation => _anims[_currentAnim];
 
@@ -73,7 +73,7 @@ public class AnimatedSprite : Node {
         if (Animation.Frames.Length > 1 && Playing && (_timeLeft -= Time.Delta) <= 0) {
             _timeLeft += _speed;
             _currentFrame++;
-            if (_currentFrame >= Animation.Frames.Length) {
+            if (_currentFrame >= Animation.Frames.Length - 1) {
                 if (Animation.Looping)
                     _currentFrame = 0;
                 Playing = Animation.Looping;

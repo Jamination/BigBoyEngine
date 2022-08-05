@@ -9,8 +9,6 @@ public class Solid : Hitbox {
 
     public static HashSet<Solid> Instances = new();
 
-    public Solid(float offsetX, float offsetY, float width, float height) : base(offsetX, offsetY, width, height) { }
-
     public HashSet<Actor> GetAllAttachedActors() {
         var riding = new HashSet<Actor>();
         foreach (var actor in Actor.Instances) {
@@ -45,10 +43,10 @@ public class Solid : Hitbox {
 
         if (amountX != 0) {
             Position += new Vector2(amountX, 0);
-            var aabb = GetGlobalAABB();
+            var aabb = GetUnionAABB();
             foreach (var actor in Actor.Instances) {
-                var actorAABB = actor.GetGlobalAABB();
-                if (actor.GetGlobalAABB().Intersects(aabb))
+                var actorAABB = actor.GetUnionAABB();
+                if (actor.GetUnionAABB().Intersects(aabb))
                     actor.MoveX(amountX > 0 ? aabb.Right - actorAABB.Left
                         : aabb.Left - actorAABB.Right, actor.Squish);
                 else if (attached.Contains(actor))
@@ -58,10 +56,10 @@ public class Solid : Hitbox {
 
         if (amountY != 0) {
             Position += new Vector2(0, amountY);
-            var aabb = GetGlobalAABB();
+            var aabb = GetUnionAABB();
             foreach (var actor in Actor.Instances) {
-                var actorAABB = actor.GetGlobalAABB();
-                if (actor.GetGlobalAABB().Intersects(aabb))
+                var actorAABB = actor.GetUnionAABB();
+                if (actor.GetUnionAABB().Intersects(aabb))
                     actor.MoveY(amountY > 0 ? aabb.Bottom - actorAABB.Top
                         : aabb.Top - actorAABB.Bottom, actor.Squish);
                 else if (attached.Contains(actor))
