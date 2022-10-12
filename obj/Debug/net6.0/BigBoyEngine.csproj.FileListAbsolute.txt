@@ -12,7 +12,6 @@ C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\net6
 C:\Users\james\OneDrive\Desktop\Projects\FunGame9000\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.csproj.AssemblyReference.cache
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\BigBoyEngine.deps.json
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\BigBoyEngine.dll
-C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\ref\BigBoyEngine.dll
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\BigBoyEngine.pdb
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.AssemblyInfoInputs.cache
@@ -25,3 +24,4 @@ C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEng
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\Dcrew.dll
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\bin\Debug\net6.0\Dcrew.pdb
 C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\BigBoyEngine.csproj.CopyComplete
+C:\Users\james\OneDrive\Desktop\Projects\BigBoyEngine\obj\Debug\net6.0\refint\BigBoyEngine.dll

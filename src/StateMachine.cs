@@ -18,6 +18,7 @@ public class StateMachine<T> where T : Node {
         if (NextState == State) return;
         State?.Exit();
         State = NextState;
+        if (State == null) return;
         State.Controller = Controller;
         NextState = null;
         State.Enter();

@@ -41,8 +41,8 @@ public class Sprite : Node {
         var width = MathF.Round((Source?.Width ?? Texture.Width) * GlobalScale.X);
         var height = MathF.Round((Source?.Height ?? Texture.Height) * GlobalScale.Y);
         return new Rectangle(
-            (int)(GlobalPosition.X - width * .5f),
-            (int)(GlobalPosition.Y - height * .5f),
+            (int)(GlobalPosition.X - (Centered ? width * .5f : 0)),
+            (int)(GlobalPosition.Y - (Centered ? height * .5f : 0)),
             (int)width,
             (int)height
         );

@@ -54,14 +54,6 @@ public class Core : Game {
         Content.RootDirectory = "Content";
     }
 
-    protected override void Initialize() {
-        GDM.PreferredBackBufferWidth = 1280;
-        GDM.PreferredBackBufferHeight = 720;
-        GDM.IsFullScreen = false;
-        GDM.ApplyChanges();
-        base.Initialize();
-    }
-
     public virtual void Config(string title, int width, int height, bool startsFullscreen = false, int? viewportWidth = null,
         int? viewportHeight = null, bool smoothscreen = false) {
         GDM.IsFullScreen = startsFullscreen;

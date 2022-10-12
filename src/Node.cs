@@ -282,12 +282,10 @@ public class Node {
             SpatialChildren.Add(spatial);
     }
 
-    public T GetAt<T>(float x, float y, string name = "") where T : Node {
-        if (name == "")
-            name = typeof(T).Name;
+    public T GetAt<T>(float x, float y) where T : Node {
         foreach (var id in World.Query(new Vector2(x, y)).All) {
             var node = Core.Nodes[id];
-            if (node != this && node.Name == name && node is T t)
+            if (node != this && node is T t)
                 return t;
         }
         return null;
