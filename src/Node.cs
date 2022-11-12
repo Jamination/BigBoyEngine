@@ -195,8 +195,6 @@ public class Node {
     private Matrix _transform;
     private Color _tint = Color.White;
 
-    protected HashSet<Node> SpatialChildren = new();
-
     private bool
         _positionIsDirty,
         _rotationIsDirty,
@@ -268,18 +266,6 @@ public class Node {
         Scale = new Vector2(scale, scale);
         Rotation = rotation;
         Depth = depth;
-        OnNodeAdded += NodeAdded;
-        OnNodeRemoved += NodeRemoved;
-    }
-
-    private void NodeRemoved(Node node) {
-        if (node is Node spatial)
-            SpatialChildren.Remove(spatial);
-    }
-
-    private void NodeAdded(Node node) {
-        if (node is Node spatial)
-            SpatialChildren.Add(spatial);
     }
 
     public T GetAt<T>(float x, float y) where T : Node {
@@ -316,7 +302,7 @@ public class Node {
 
     public Rectangle GetUnionAABB() {
         var aabb = GetAABB();
-        foreach (var child in SpatialChildren) {
+        foreach (var child in Children) {
             var childAABB = child.GetUnionAABB();
             aabb = Rectangle.Union(aabb, childAABB);
         }
@@ -368,7 +354,7 @@ public class Node {
         }
         if (Active)
             UpdateBounds();
-        foreach (var child in SpatialChildren)
+        foreach (var child in Children)
             child.UpdateTransform();
         _positionIsDirty = false;
         _scaleIsDirty = false;
@@ -379,7 +365,7 @@ public class Node {
     protected void UpdateDepth() {
         if (Parent != null)
             GlobalDepth = Parent != null ? DepthRelativeToCamera + Parent.GlobalDepth : DepthRelativeToCamera;
-        foreach (var child in SpatialChildren)
+        foreach (var child in Children)
             child.UpdateDepth();
     }
 
@@ -388,7 +374,7 @@ public class Node {
             var vec = Tint.ToVector4() * Parent.GlobalTint.ToVector4();
             GlobalTint = new Color(vec.X, vec.Y, vec.Z, vec.W);
         } else GlobalTint = _tint;
-        foreach (var child in SpatialChildren)
+        foreach (var child in Children)
             child.UpdateTint();
     }
 

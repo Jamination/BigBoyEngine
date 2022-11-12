@@ -8,8 +8,8 @@
     <RepositoryUrl>https://github.com/Jamination/BigBoyEngine</RepositoryUrl>
     <PackageTags>MonoGame;Game;Framework;2D;Engine;Godot;</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <AssemblyVersion>1.0.5</AssemblyVersion>
-    <Version>1.0.5</Version>
+    <AssemblyVersion>1.0.6</AssemblyVersion>
+    <Version>1.0.6</Version>
     <PackageReleaseNotes>Fleshed out the spatial features and optimised the node tree.</PackageReleaseNotes>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
