@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "BigBoyEngine/1.0.5": {
+      "BigBoyEngine/1.0.6": {
         "dependencies": {
           "Dcrew": "1.0.6",
           "MonoGame.Framework.DesktopGL": "3.8.1.303"
@@ -73,7 +73,7 @@
     }
   },
   "libraries": {
-    "BigBoyEngine/1.0.5": {
+    "BigBoyEngine/1.0.6": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
